@@ -1,100 +1,133 @@
-package social_interaction;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-public class SocialInteractionManager {
-
-    public static void postMessage(int userId, String message) throws SQLException {
-        String sql = "INSERT INTO posts (user_id, message) VALUES (?, ?)";
-
-        try (Connection conn = DatabaseManager.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, userId);
-            pstmt.setString(2, message);
-            pstmt.executeUpdate();
-        }
+public class SocialInteraction {
+    private int id;
+    private Patron author;
+    private String content;
+    private Date datePosted;
+    private List<Comment> comments;
+    private List<Patron> likes;
+    private List<Patron> shares;
+    
+    // Constructor
+    public SocialInteraction(int id, Patron author, String content, Date datePosted) {
+        this.id = id;
+        this.author = author;
+        this.content = content;
+        this.datePosted = datePosted;
+        this.comments = new ArrayList<>();
+        this.likes = new ArrayList<>();
+        this.shares = new ArrayList<>();
     }
-
-    public static void commentOnPost(int userId, int postId, String comment) throws SQLException {
-        String sql = "INSERT INTO comments (user_id, post_id, comment) VALUES (?, ?, ?)";
-
-        try (Connection conn = DatabaseManager.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, userId);
-            pstmt.setInt(2, postId);
-            pstmt.setString(3, comment);
-            pstmt.executeUpdate();
-        }
+    
+    // Getters and Setters
+    public int getId() {
+        return id;
     }
-
-    public static void likePost(int userId, int postId) throws SQLException {
-        String sql = "INSERT INTO likes (user_id, post_id) VALUES (?, ?)";
-
-        try (Connection conn = DatabaseManager.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, userId);
-            pstmt.setInt(2, postId);
-            pstmt.executeUpdate();
-        }
+    
+    public void setId(int id) {
+        this.id = id;
     }
-
-    public static void sharePost(int userId, int postId) throws SQLException {
-        String sql = "INSERT INTO shares (user_id, post_id) VALUES (?, ?)";
-
-        try (Connection conn = DatabaseManager.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, userId);
-            pstmt.setInt(2, postId);
-            pstmt.executeUpdate();
-        }
+    
+    public Patron getAuthor() {
+        return author;
     }
-
-    public static List<String> getPostComments(int postId) throws SQLException {
-        List<String> comments = new ArrayList<>();
-        String sql = "SELECT comment FROM comments WHERE post_id = ?";
-
-        try (Connection conn = DatabaseManager.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, postId);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    comments.add(rs.getString("comment"));
-                }
-            }
-        }
-
+    
+    public void setAuthor(Patron author) {
+        this.author = author;
+    }
+    
+    public String getContent() {
+        return content;
+    }
+    
+    public void setContent(String content) {
+        this.content = content;
+    }
+    
+    public Date getDatePosted() {
+        return datePosted;
+    }
+    
+    public void setDatePosted(Date datePosted) {
+        this.datePosted = datePosted;
+    }
+    
+    public List<Comment> getComments() {
         return comments;
     }
-
-    public static List<Integer> getPostLikes(int postId) throws SQLException {
-        List<Integer> likes = new ArrayList<>();
-        String sql = "SELECT user_id FROM likes WHERE post_id = ?";
-
-        try (Connection conn = DatabaseManager.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, postId);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    likes.add(rs.getInt("user_id"));
-                }
-            }
-        }
-
+    
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+    
+    public List<Patron> getLikes() {
         return likes;
     }
-
-    public static List<Integer> getPostShares(int postId) throws SQLException {
-        List<Integer> shares = new ArrayList<>();
-        String sql = "SELECT user_id FROM shares WHERE post_id = ?";
-
-        try (Connection conn = DatabaseManager.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, postId);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    shares.add(rs.getInt("user_id"));
-                }
-            }
-        }
-
+    
+    public void setLikes(List<Patron> likes) {
+        this.likes = likes;
+    }
+    
+    public List<Patron> getShares() {
         return shares;
     }
+    
+    public void setShares(List<Patron> shares) {
+        this.shares = shares;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
