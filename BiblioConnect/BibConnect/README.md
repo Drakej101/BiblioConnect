@@ -23,3 +23,6 @@ Built on top of the Library System for Assignment #2, the BiblioConnect System i
 **Following and Followers:** Users can follow each other to stay updated on their activities, book recommendations, and discussions.
 
 **Events and Meetups:** The platform hosts literary events, book clubs, author signings, and other literary gatherings where users can connect with like-minded readers.
+
+
+The system utilizes an open-source SQLite database for persistent data storage, ensuring data integrity and scalability. By leveraging SQLite, BiblioConnect provides efficient management of library resources, user interactions, and social networking features, enriching users' literary experiences and fostering a vibrant community of book enthusiasts.
